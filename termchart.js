@@ -9,10 +9,99 @@ var Canvas = require('term-canvas')
     , spawn = cp.spawn;
 
 var canvas = new Canvas(50, 100)
-  , ctx = canvas.getContext('2d');
+  , ctx = canvas.getContext('2d')
+  , max_limit = 100;
 
 
-function run_cmd(cmd, args, callBack ) {
+function drawGraph(hash){
+
+}
+
+function getStats(line)
+{
+   var arr = line.split(" ");
+    console.log(arr);
+}
+
+function getParams(line){
+}
+
+function watchLog(filename) {
+    var fp = path.resolve(process.cwd(), filename);
+    this.fname = fp;
+    this.tail = spawn('tail', ['-F', this.fname]);
+    this.tail.stdout.setEncoding('utf8');
+    var lines = require('lines');
+    lines(this.tail.stdout);
+
+    this.tail.stdout.on('line', function(line){
+        getStats(line);
+    });
+
+    this.tail.once('exit', function(code, signal){
+        console.log("exit");
+    });
+
+   /* this.on('end', function(){
+        console.log("end");
+    });*/
+}
+
+/*run_cmd( "tail", ["-f"], function(data){
+    console.log(data);
+    console.log("------------------------------------------------------------------------------------");
+});*/
+
+watchLog("log.txt");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ctx.clear();
+
+ctx.fillStyle = 'red';
+ctx.fillRect(5, 5, 20, 10);
+
+ctx.fillStyle = 'blue';
+ctx.fillRect(27, 5, 20, 10);
+
+ctx.fillStyle = 'yellow';
+ctx.fillRect(49, 5, 20, 10);
+
+console.log('\n\n\n');
+ctx.resetState();
+
+function run_cmd(cmd, args, callBack )
+{
     var child = spawn(cmd, args);
     var data = "";
 
@@ -27,28 +116,4 @@ function run_cmd(cmd, args, callBack ) {
     //});
 }
 
-function watchLog(filename) {
-    var fp = path.resolve(process.cwd(), filename);
-    console.log(fp);
-}
-
-/*run_cmd( "tail", ["-f"], function(data){
-    console.log(data);
-    console.log("------------------------------------------------------------------------------------");
-});*/
-
-watchLog("log.txt");
-/*
-ctx.clear();
-
-ctx.fillStyle = 'red';
-ctx.fillRect(5, 5, 20, 10);
-
-ctx.fillStyle = 'blue';
-ctx.fillRect(27, 5, 20, 10);
-
-ctx.fillStyle = 'yellow';
-ctx.fillRect(49, 5, 20, 10);
-
-console.log('\n\n\n');
-ctx.resetState();*/
+*/
