@@ -8,22 +8,38 @@ var Canvas = require('term-canvas')
     , exec = cp.exec
     , spawn = cp.spawn;
 
-var canvas = new Canvas(50, 100)
+var canvas = new Canvas(50, 50)
   , ctx = canvas.getContext('2d')
-  , max_limit = 100;
+  , max_limit = 10;
 
 
-function drawGraph(hash){
+process.on('SIGINT', function(){
+  ctx.reset();
+  process.nextTick(function(){
+    process.exit();
+  });
+});
 
-}
+
+ctx.hideCursor();
 
 function getStats(line)
 {
-   var arr = line.split(" ");
+    var arr = line.split(" ");
     console.log(arr);
-}
+    ctx.clearRect(0,0,canvas.width, canvas.height);
+    x = 3;
+    arr.forEach(function(n){
+        var y = 20
+          , w = 5
+          , h = 20*(n/max_limit);
 
-function getParams(line){
+        ctx.fillStyle = 'blue';
+        ctx.fillRect(x, y-h+3, w, h);
+        ctx.fillStyle = 'black';
+        ctx.fillText(n.toString(), x+2, y+1);
+        x += 9;
+    });
 }
 
 function watchLog(filename) {
@@ -47,73 +63,4 @@ function watchLog(filename) {
     });*/
 }
 
-/*run_cmd( "tail", ["-f"], function(data){
-    console.log(data);
-    console.log("------------------------------------------------------------------------------------");
-});*/
-
 watchLog("log.txt");
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-ctx.clear();
-
-ctx.fillStyle = 'red';
-ctx.fillRect(5, 5, 20, 10);
-
-ctx.fillStyle = 'blue';
-ctx.fillRect(27, 5, 20, 10);
-
-ctx.fillStyle = 'yellow';
-ctx.fillRect(49, 5, 20, 10);
-
-console.log('\n\n\n');
-ctx.resetState();
-
-function run_cmd(cmd, args, callBack )
-{
-    var child = spawn(cmd, args);
-    var data = "";
-
-    child.stdout.on('data', function(buffer){
-        var data = buffer.toString();
-        callBack(data);
-    });
-
-    //TODO top never going to end.
-    //    child.stdout.on('end', function(){
-    //callBack(data)
-    //});
-}
-
-*/
