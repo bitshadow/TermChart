@@ -3,19 +3,21 @@
  * Module dependencies.
  */
 var Canvas = require('term-canvas')
-    , cp = require('child_process')
+    , cp   = require('child_process')
     , EventEmitter = require('events').EventEmitter
     , util = require('util')
     , path = require('path')
     , spawn = cp.spawn;
 
-//process.stdout.getWindowSize()
-var canvas = new Canvas(100, 100)
-  , ctx = canvas.getContext('2d');
+var size = process.stdout.getWindowSize()
+    , canvas = new Canvas(size)
+    , ctx    = canvas.getContext('2d');
 
 module.exports = TermChart;
 
-//Clear canvas when recieved terminate signal like [^C]
+/*
+ * Clear canvas when recieved terminate signal like [^C]
+ */
 process.on('SIGINT', function(){
   ctx.reset();
   process.nextTick(function(){
@@ -23,7 +25,7 @@ process.on('SIGINT', function(){
   });
 });
 
-// hide curser from context
+//hide curser from context
 ctx.hideCursor();
 
 /*
@@ -103,7 +105,3 @@ TermChart.prototype.trackLog = function(filename) {
 TermChart.prototype.close = function(){
     this.emit('endtermchart');
 }
-
-var t = new TermChart();
-t.max_limit(10);
-t.trackLog("log.txt");
