@@ -68,7 +68,7 @@ TermChart.prototype.draw = function(arr)
 
 /**
  *  Execute tail as child process.
- *  Generate for every single line appended
+ *  Generate event for every single line appended
  *  @param absolute path of the file
  */
 TermChart.prototype.execTail = function(filename){

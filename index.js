@@ -13,7 +13,7 @@ function rand() {
 setInterval(function(){
   var data = [rand(), rand(), rand(), rand(), rand(), rand()];
   var log = data.join(' ') + "\n";
-  console.log(data);
+
   fs.appendFile('log.txt', log, function (err) {
         if (err) throw err;
   });
