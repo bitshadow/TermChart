@@ -58,7 +58,7 @@ TermChart.prototype.draw = function(arr)
           , w = 5
           , h = 30*(n/termchart.max_limit);
 
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = 'blue';
         ctx.fillRect(x, y-h+3, w, h);
         ctx.fillStyle = 'black';
         ctx.fillText(n.toString(), x+2, y+1);
